@@ -50,38 +50,38 @@ Exemplo: Facemos o seguinte css:
 
 ```css
 .media-queries {
-	width: 1px;
+	width: 10px;
 }
 
 @media (min-width: 800px) {
 	.media-queries {
-		width: 2px;
+		width: 20px;
 	}
 }
 
 @media (min-width: 1200px) {
 	.media-queries {
-		width: 3px;
+		width: 30px;
 	}
 }
 ```
 
-Agora por css, asociamos scripts a cada ancho do div (1, 2 ou 3 píxeles):
+Agora asociamos funcións de javascript por cada ancho do div (10, 20 ou 30 píxeles):
 
 ```js
-addToMediaQuery(1, function () {
+addToMediaQuery(10, function () {
 	alert('Estamos no primeiro punto do media query');
 });
 
-addToMediaQuery(2, function () {
+addToMediaQuery(20, function () {
 	alert('Estamos no segundo punto do media query');
 });
 
-addToMediaQuery(3, function () {
+addToMediaQuery(30, function () {
 	alert('Estamos no terceiro punto do media query');
 });
 
-addToMediaQuery(3, function () {
+addToMediaQuery(30, function () {
 	alert('Seguimos no terceiro punto. Podemos engadir máis dunha función por cada punto');
 });
 ```
