@@ -1,0 +1,9 @@
+.media-queries {
+	width: 100px;
+}
+
+@media (min-width: 800px) {
+	.media-queries {
+		width: 800px;
+	}
+}
