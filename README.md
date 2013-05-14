@@ -85,3 +85,20 @@ addToMediaQuery(30, function () {
 	alert('Seguimos no terceiro punto. Podemos engadir máis dunha función por cada punto');
 });
 ```
+
+scrollTo
+========
+
+Fai unha animación de scroll vertical a un punto do documento
+
+```js
+//Posición e duración
+$.scrollTo(340, 'fast');
+
+//Posición e opcións (as mesmas que a función animate de jquery: http://api.jquery.com/animate/#animate-properties-options)
+$.scrollTo(340, {
+	duration: 500,
+	easing: 'linear'
+});
+```
+});
