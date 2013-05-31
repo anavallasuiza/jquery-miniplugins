@@ -22,13 +22,16 @@
 				return false;
 			});
 
-			var $tab;
+			var $tab = $tabs.filter('.active');
 
-			if (location.hash) {
-				$tab = $tabs.filter('[href=' + location.hash + ']');
-			}
-			if (!$tab || !$tab.length) {
-				$tab = $tabs.first();
+			if (!$tab.length) {
+				if (location.hash) {
+					$tab = $tabs.filter('[href=' + location.hash + ']');
+				}
+
+				if (!$tab || !$tab.length) {
+					$tab = $tabs.first();
+				}
 			}
 
 			$tab.click();
