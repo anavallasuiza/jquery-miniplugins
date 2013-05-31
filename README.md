@@ -12,7 +12,7 @@ Usa a seguinte estructura de html
 ```html
 <div class="tabs">
 	<ul>
-		<li><a href="#contido1">Contido 1</a></li>
+		<li><a href="#contido1" class="active">Contido 1</a></li>
 		<li><a href="#contido2">Contido 2</a></li>
 	</ul>
 
@@ -92,6 +92,9 @@ scrollTo
 Fai unha animación de scroll vertical a un punto do documento
 
 ```js
+//Move directamente (sen animación)
+$.scrollTo(340);
+
 //Posición e duración
 $.scrollTo(340, 'fast');
 
@@ -101,4 +104,3 @@ $.scrollTo(340, {
 	easing: 'linear'
 });
 ```
-});
