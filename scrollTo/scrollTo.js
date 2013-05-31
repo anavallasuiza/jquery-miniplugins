@@ -34,9 +34,13 @@
 		var $scrollable = getScrollable();
 
 		if ($scrollable) {
-			$scrollable.animate({
-				scrollTop: top
-			}, options);
+			if (options === undefined) {
+				$scrollable.scrollTop(top);
+			} else {
+				$scrollable.animate({
+					scrollTop: top
+				}, options);
+			}
 		}
 	}
 })();
