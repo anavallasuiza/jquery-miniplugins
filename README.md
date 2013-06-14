@@ -104,3 +104,35 @@ $.scrollTo(340, {
 	easing: 'linear'
 });
 ```
+
+ajaxScroll
+==========
+
+Fai click nun item cando o scroll chega abaixo de todo. Útil para que se vaia cargando o contido por abaixo segundo se vaia facendo scroll.
+
+```html
+<div class="contido-dinamico">
+	<ul class="lista-elementos">
+	</ul>
+	<a href="cargar-elementos.php" class="cargar-elementos">Ver máis</a>
+</div>
+```
+
+```js
+$('.contido-dinamico').ajaxScroll({
+	listTarget: '.lista-elementos',
+	btnTarget: '.cargar-elementos',
+	callback: function ($lista, $boton) {
+		// Pausamos o ajaxScroll para que non se executen varios callback ao mesmo tempo:
+		$this.ajaxScroll('pause');
+
+		//Cargamos dinamicamente o que queiramos:
+		$.get($boton.attr('href'), function (html) {
+			$lista.append(html);
+
+			//Unha vez cargado o novo contido, facemos de novo play
+			$this.ajaxScroll('play');
+		});
+	}
+})
+```
