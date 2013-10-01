@@ -1,46 +1,81 @@
 /**
- * ScrollTo
- * [version 1.1]
+ * click on scroll
+ * [version 1.0]
  */
 
-(function () {
-	var $scrollable;
-	var getScrollable = function () {
-		if ($scrollable) {
-			return $scrollable;
-		}
+;(function ($, window, document, undefined) {
+	var pluginName = "clickOnScroll", defaults = {
+		scrollerElement: window,
+		listElement: '',
+		offset: 0
+	};
 
-		var elements = ['body', 'html'];
+	function Plugin (element, options) {
+		this.element = element;
+		this.settings = $.extend({}, defaults, options);
 
-		for (var i = elements.length - 1; i >= 0; i--) {
-			var $scrollElement = $(elements[i]);
+		this.init();
+	}
 
-			if ($scrollElement.scrollTop() > 0) {
-				return $scrollable = $scrollElement;
-			} else {
-				$scrollElement.scrollTop(1);
-				var isScrollable = $scrollElement.scrollTop() > 0;
+	Plugin.prototype = {
+		init: function () {
+			this.$element = $(this.element);
+			this.$list = $(this.settings.listElement);
+			this.$scroller = $(this.settings.scrollerElement);
+			
+			this.play();
 
-				$scrollElement.scrollTop(0);
+			var that = this;
 
-				if (isScrollable) {
-					return $scrollable = $scrollElement;
+			this.$scroller.on('scroll.' + pluginName, function () {
+				if (that.mustClick()) {
+					that.$element.click();
 				}
+			});
+		},
+		play: function () {
+			this.paused = false;
+		},
+		pause: function () {
+			this.paused = true;
+		},
+		mustClick: function () {
+			if (this.paused) {
+				return false;
 			}
-		};
-	}
 
-	$.scrollTo = function (top, options) {
-		var $scrollable = getScrollable();
-
-		if ($scrollable) {
-			if (options === undefined) {
-				$scrollable.scrollTop(top);
-			} else {
-				$scrollable.animate({
-					scrollTop: top
-				}, options);
-			}
+			return ((this.$list.height() - this.$scroller.scrollTop() - this.$scroller.height() - this.settings.offset) <= 0);
+		},
+		destroy: function () {
+			this.$scroller.off('.' + pluginName);
 		}
-	}
-})();
+	};
+
+	$.fn[pluginName] = function (options) {
+		if ((options === undefined) || (typeof options === 'object')) {
+			return this.each(function () {
+				if (!$.data(this, "plugin_" + pluginName)) {
+					$.data(this, "plugin_" + pluginName, new Plugin(this, options));
+				}
+			});
+		}
+
+		if ((typeof options === 'string') && (options[0] !== '_') && (options !== 'init')) {
+			var returns, args = arguments;
+
+			this.each(function () {
+				var instance = $.data(this, 'plugin_' + pluginName);
+
+				if ((instance instanceof Plugin) && (typeof instance[options] === 'function')) {
+					returns = instance[options].apply(instance, Array.prototype.slice.call(args, 1));
+				}
+
+				if (options === 'destroy') {
+				  $.data(this, 'plugin_' + pluginName, null);
+				}
+			});
+
+			return returns !== undefined ? returns : this;
+		}
+	};
+})(jQuery, window, document);
