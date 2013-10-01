@@ -44,7 +44,7 @@
 				return false;
 			}
 
-			return ((this.$list.height() - this.$scroller.scrollTop() - this.$scroller.height() - settings.offset) <= 0));
+			return ((this.$list.height() - this.$scroller.scrollTop() - this.$scroller.height() - this.settings.offset) <= 0);
 		},
 		destroy: function () {
 			this.$scroller.off('.' + pluginName);
