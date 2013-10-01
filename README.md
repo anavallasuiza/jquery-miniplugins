@@ -105,34 +105,35 @@ $.scrollTo(340, {
 });
 ```
 
-ajaxScroll
-==========
+clickOnScroll
+=============
 
-Fai click nun item cando o scroll chega abaixo de todo. Útil para que se vaia cargando o contido por abaixo segundo se vaia facendo scroll.
+Lanza un click nun elemento cando o scroll chega a parte de abaixo dunha listaxe de elementos. Útil para que se vaia cargando o contido por abaixo segundo se vaia facendo scroll.
 
 ```html
 <div class="contido-dinamico">
 	<ul class="lista-elementos">
 	</ul>
-	<a href="cargar-elementos.php" class="cargar-elementos">Ver máis</a>
+	<a href="cargar-elementos.php" id="#boton-vermais">Ver máis</a>
 </div>
 ```
 
 ```js
-$('.contido-dinamico').ajaxScroll({
-	listTarget: '.lista-elementos',
-	btnTarget: '.cargar-elementos',
-	callback: function ($lista, $boton) {
-		// Pausamos o ajaxScroll para que non se executen varios callback ao mesmo tempo:
-		$this.ajaxScroll('pause');
+$('#boton-vermais').click(function () {
+	var $this = $(this);
 
-		//Cargamos dinamicamente o que queiramos:
-		$.get($boton.attr('href'), function (html) {
-			$lista.append(html);
+	$this.clickOnScroll('pause'); //Pausamos o plugin
 
-			//Unha vez cargado o novo contido, facemos de novo play
-			$this.ajaxScroll('play');
-		});
-	}
+	//Cargar por ajax mais datos en .lista-elementos
+	$.get($this.attr('href'), function (datos) {
+		$('.lista-elementos').append(datos);
+
+		$this.clickOnScroll('play');
+	})
+});
+
+$('#boton-vermais').clickOnScroll({
+	listElement: '.lista-elementos',
+	offset: 500 //Queremos que se lance 500px antes de chegar ao final
 })
 ```
