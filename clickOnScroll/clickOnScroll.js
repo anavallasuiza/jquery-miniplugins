@@ -1,13 +1,14 @@
 /**
  * click on scroll
- * [version 1.0]
+ * [version 1.1]
  */
 
 ;(function ($, window, document, undefined) {
 	var pluginName = "clickOnScroll", defaults = {
 		scrollerElement: window,
 		listElement: '',
-		offset: 0
+		offset: 0,
+		timeout: 500
 	};
 
 	function Plugin (element, options) {
@@ -26,11 +27,20 @@
 			this.play();
 
 			var that = this;
+			var timeout;
 
 			this.$scroller.on('scroll.' + pluginName, function () {
-				if (that.mustClick()) {
-					that.$element.click();
+				if (timeout) {
+					return;
 				}
+				timeout = setTimeout(function () {
+					console.log('check');
+					if (that.mustClick()) {
+						console.log('go');
+						that.$element.click();
+					}
+					timeout = undefined;
+				}, that.settings.timeout);
 			});
 		},
 		play: function () {
@@ -44,7 +54,17 @@
 				return false;
 			}
 
-			return ((this.$list.height() - this.$scroller.scrollTop() - this.$scroller.height() - this.settings.offset) <= 0);
+			var height = 0;
+
+			this.$list.each(function () {
+				var thisHeight = $(this).height();
+
+				if ((height === 0) || (thisHeight < height)) {
+					height = thisHeight;
+				}
+			});
+
+			return ((height - this.$scroller.scrollTop() - this.$scroller.height() - this.settings.offset) <= 0);
 		},
 		destroy: function () {
 			this.$scroller.off('.' + pluginName);
