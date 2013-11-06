@@ -34,9 +34,7 @@
 					return;
 				}
 				timeout = setTimeout(function () {
-					console.log('check');
 					if (that.mustClick()) {
-						console.log('go');
 						that.$element.click();
 					}
 					timeout = undefined;
