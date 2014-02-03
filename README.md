@@ -151,5 +151,5 @@ $(document).ready(function () {
 	});
 });
 
-Mira o código para máis opcións.
 ```
+Mira o código para máis opcións.
