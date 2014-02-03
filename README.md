@@ -146,8 +146,10 @@ Engade imaxe do favicon do sitio web do href dos links externos
 ```js
 $(document).ready(function () {
 	$('a.external').ansFaviconizer({
-		where: 'prepend', //see below possible values
-		className: 'myclass' //this class will be applied to the favicon img
+		where: 'prepend',
+		className: 'myclass'
 	});
 });
+
+Mira o código para máis opcións.
 ```
