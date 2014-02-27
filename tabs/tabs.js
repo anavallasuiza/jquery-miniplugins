@@ -20,15 +20,19 @@
 
 			var that = this;
 
-			this.$tabs.on('click.tabs', function () {
+			this.$tabs.on('click.tabs', function (e) {
 				var $this = $(this), id = $this.attr('href');
 
 				that.$contents.not(id).hide().trigger('tabHide');
 				that.$contents.filter(id).show().trigger('tabShow');
 				that.$tabs.removeClass('active');
 				$this.addClass('active');
+				
+				if ($.isFunction(window.history.replaceState)) {
+					window.history.replaceState(null, null, id);
+				}
 
-				return false;
+				e.preventDefault();
 			});
 
 			var $tab = this.$tabs.filter('.active');
@@ -71,7 +75,7 @@
 				}
 
 				if (options === 'destroy') {
-				  $.data(this, 'plugin_' + pluginName, null);
+					$.data(this, 'plugin_' + pluginName, null);
 				}
 			});
 
