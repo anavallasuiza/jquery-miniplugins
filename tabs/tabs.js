@@ -1,6 +1,6 @@
 /**
  * Tabs
- * [version 2.0]
+ * [version 2.1]
  */
 ;(function ($, window, document, undefined) {
 	var pluginName = "tabs", defaults = {};
@@ -20,7 +20,7 @@
 
 			var that = this;
 
-			this.$tabs.on('click.tabs', function (e) {
+			this.$tabs.on('click.tabs', function (e, parameters) {
 				var $this = $(this), id = $this.attr('href');
 
 				that.$contents.not(id).hide().trigger('tabHide');
@@ -28,7 +28,7 @@
 				that.$tabs.removeClass('active');
 				$this.addClass('active');
 				
-				if ($.isFunction(window.history.replaceState)) {
+				if (!parameters && $.isFunction(window.history.replaceState)) {
 					window.history.replaceState(null, null, id);
 				}
 
@@ -47,7 +47,7 @@
 				}
 			}
 
-			$tab.click();
+			$tab.trigger('click', true);
 		},
 		destroy: function () {
 			this.$tabs.off('.tabs');
